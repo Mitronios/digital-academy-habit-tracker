@@ -1,49 +1,66 @@
-"use client"
+// src/components/ui/color-mode.tsx (o la ruta donde lo tengas)
+"use client"; // Mantenlo por si acaso, no daña en Vite
 
-import type { IconButtonProps, SpanProps } from "@chakra-ui/react"
-import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react"
-import { ThemeProvider, useTheme } from "next-themes"
-import type { ThemeProviderProps } from "next-themes"
-import * as React from "react"
-import { LuMoon, LuSun } from "react-icons/lu"
+import {
+  ColorModeScript, // Importa esto para la persistencia del tema
+  IconButton,
+  Skeleton,
+  Text,
+  useColorMode, // Este hook te da el modo de color actual y la función para cambiarlo
+  useColorModeValue, // Este hook te permite elegir un valor basado en el modo de color
+  type IconButtonProps,
+} from "@chakra-ui/react";
+import * as React from "react";
+import { LuMoon, LuSun } from "react-icons/lu";
 
-export interface ColorModeProviderProps extends ThemeProviderProps {}
+// 1. ELIMINAMOS next-themes Y ClientOnly
 
-export function ColorModeProvider(props: ColorModeProviderProps) {
+export interface ColorModeProviderProps {
+  // Ahora solo toma children, ya que el resto lo maneja Chakra
+  children: React.ReactNode;
+  initialColorMode?: 'light' | 'dark'; // Puedes pasar un modo inicial si lo deseas
+}
+
+// Este componente ahora es solo un wrapper que renderiza el ColorModeScript
+// ColorModeScript debe ir en el nivel más alto de tu aplicación (como en main.tsx)
+// para funcionar correctamente y prevenir el "flash" de contenido sin estilo.
+// Si lo pones aquí, asegúrate de que se renderice una sola vez y lo más arriba posible.
+export function ColorModeProvider({ children, initialColorMode }: ColorModeProviderProps) {
   return (
-    <ThemeProvider attribute="class" disableTransitionOnChange {...props} />
-  )
+    <>
+      {/* ColorModeScript es crucial para establecer el modo de color antes que el resto de la UI */}
+      <ColorModeScript initialColorMode={initialColorMode || 'dark'} />
+      {children}
+    </>
+  );
 }
 
-export type ColorMode = "light" | "dark"
+// Los hooks y componentes siguientes ya usan useColorMode de Chakra UI.
+// No necesitas redefinir useColorMode si usas el de Chakra.
+// Sin embargo, si quieres mantener tu API personalizada, puedes hacerlo así:
 
-export interface UseColorModeReturn {
-  colorMode: ColorMode
-  setColorMode: (colorMode: ColorMode) => void
-  toggleColorMode: () => void
-}
+export type ColorMode = "light" | "dark";
 
-export function useColorMode(): UseColorModeReturn {
-  const { resolvedTheme, setTheme, forcedTheme } = useTheme()
-  const colorMode = forcedTheme || resolvedTheme
-  const toggleColorMode = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark")
-  }
-  return {
-    colorMode: colorMode as ColorMode,
-    setColorMode: setTheme,
-    toggleColorMode,
-  }
-}
+// **OPCIONAL**: Si quieres usar el `useColorMode` de Chakra directamente, esto puede ser simplificado.
+// Pero si quieres mantener tu interfaz `UseColorModeReturn`, puedes envolverlo.
+// export function useColorMode(): UseColorModeReturn {
+//   const { colorMode, toggleColorMode, setColorMode } = _useColorMode(); // Renombra para evitar conflicto
+//   return {
+//     colorMode: colorMode as ColorMode,
+//     setColorMode: setColorMode as (colorMode: ColorMode) => void,
+//     toggleColorMode,
+//   };
+// }
 
-export function useColorModeValue<T>(light: T, dark: T) {
-  const { colorMode } = useColorMode()
-  return colorMode === "dark" ? dark : light
-}
+// Ya estás usando useColorModeValue de Chakra, lo cual es correcto.
+// export function useColorModeValue<T>(light: T, dark: T) {
+//   const { colorMode } = useColorMode(); // Asumiendo que usas tu useColorMode o el de Chakra
+//   return colorMode === "dark" ? dark : light;
+// }
 
 export function ColorModeIcon() {
-  const { colorMode } = useColorMode()
-  return colorMode === "dark" ? <LuMoon /> : <LuSun />
+  const { colorMode } = useColorMode(); // Usa el de Chakra
+  return colorMode === "dark" ? <LuMoon /> : <LuSun />;
 }
 
 interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
@@ -52,57 +69,61 @@ export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
   ColorModeButtonProps
 >(function ColorModeButton(props, ref) {
-  const { toggleColorMode } = useColorMode()
+  const { toggleColorMode } = useColorMode(); // Usa el de Chakra
   return (
-    <ClientOnly fallback={<Skeleton boxSize="8" />}>
-      <IconButton
-        onClick={toggleColorMode}
-        variant="ghost"
-        aria-label="Toggle color mode"
-        size="sm"
-        ref={ref}
-        {...props}
-        css={{
-          _icon: {
-            width: "5",
-            height: "5",
-          },
-        }}
-      >
-        <ColorModeIcon />
-      </IconButton>
-    </ClientOnly>
-  )
-})
+    // 2. ELIMINAMOS ClientOnly y su fallback de aquí
+    <IconButton
+      onClick={toggleColorMode}
+      variant="ghost"
+      aria-label="Toggle color mode"
+      size="sm"
+      ref={ref}
+      {...props}
+      // Considera si necesitas este 'css' o puedes usar props directamente
+      css={{
+        _icon: {
+          width: "5",
+          height: "5",
+        },
+      }}
+    >
+      <ColorModeIcon />
+    </IconButton>
+  );
+});
 
-export const LightMode = React.forwardRef<HTMLSpanElement, SpanProps>(
+// Estos componentes LightMode/DarkMode parecen ser para Next.js y su manejo de temas.
+// Si no necesitas "clasificar" secciones de la UI con estos modos específicos,
+// y solo quieres que la UI reaccione al modo global, podrías eliminarlos.
+// Si los necesitas, su implementación actual no parece depender de ClientOnly.
+export const LightMode = React.forwardRef<HTMLSpanElement, any>( // Puedes poner SpanProps si necesitas tipar props
   function LightMode(props, ref) {
     return (
-      <Span
+      <Text as="span"
         color="fg"
         display="contents"
-        className="chakra-theme light"
-        colorPalette="gray"
-        colorScheme="light"
+        className="chakra-theme light" // Esta clase y esquema de color se usan con next-themes
+        // colorPalette="gray" // Posiblemente no necesario si se gestiona a nivel global
+        // colorScheme="light"
         ref={ref}
         {...props}
       />
-    )
+    );
   },
-)
+);
 
-export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(
+export const DarkMode = React.forwardRef<HTMLSpanElement, any>( // Puedes poner SpanProps si necesitas tipar props
   function DarkMode(props, ref) {
     return (
-      <Span
+      <Text as="span"
         color="fg"
         display="contents"
-        className="chakra-theme dark"
-        colorPalette="gray"
-        colorScheme="dark"
+        className="chakra-theme dark" // Esta clase y esquema de color se usan con next-themes
+        // colorPalette="gray"
+        // colorScheme="dark"
         ref={ref}
         {...props}
       />
-    )
+    );
   },
-)
+);
