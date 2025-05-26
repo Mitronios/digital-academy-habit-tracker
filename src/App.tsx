@@ -1,20 +1,24 @@
+import { Box, Container, Heading, VStack } from '@chakra-ui/react'
 import './App.css'
 import AppForm from './components/AppForm'
+import AppButton from './components/AppButton'
 
 function App() {
-
-  // const colors = [
-  //   "#DAF7A6",
-  //   "#FFC300",
-  //   "#FF5733",
-  //   "#C70039",
-  //   "#900C3F",
-  //   "#581845",
-  // ]
   return(
     <main>
-     <h1>My habit tracker</h1>
-     <AppForm/>
+      <Container>
+        <VStack>
+          <Heading>
+            HabitTracker
+          </Heading>
+          <Box>
+          <AppForm onAddHabit={() => {}}/>
+          </Box>
+          <AppButton onClick={() => {}} type="button">
+            Reset Habits
+          </AppButton>
+        </VStack>
+      </Container>
     </main>   
   )
 }
