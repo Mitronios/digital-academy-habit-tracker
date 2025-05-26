@@ -1,4 +1,5 @@
 import './App.css'
+import AppForm from './components/AppForm'
 
 function App() {
 
@@ -10,7 +11,12 @@ function App() {
   //   "#900C3F",
   //   "#581845",
   // ]
-  return <h1>My habit tracker</h1>
+  return(
+    <main>
+     <h1>My habit tracker</h1>
+     <AppForm/>
+    </main>   
+  )
 }
 
 export default App
