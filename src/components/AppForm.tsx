@@ -11,6 +11,10 @@ export interface Habit {
   color: string;
 }
 
+interface AppFormProps {
+  onAddHabit: (newHabit: Habit) => void;
+}
+
 // Colors
 const AVAILABLE_COLORS = [
     "#DAF7A6",
@@ -21,7 +25,7 @@ const AVAILABLE_COLORS = [
     "#581845",
 ];
 
-const AppForm = () => {
+const AppForm = ({onAddHabit}: AppFormProps) => {
 
   // States
   const [habitName, setHabitName] = useState<string>("")
@@ -29,6 +33,16 @@ const AppForm = () => {
   // Handler
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Define a new habit
+    const newHabit: Habit = {
+      id: crypto.randomUUID(),
+      name: habitName.trim(),
+      color: ""
+    }
+
+    // Handle the newHabit creation
+    onAddHabit(newHabit);
 
   };
 
@@ -66,7 +80,7 @@ const AppForm = () => {
             type="submit"
             onClick={() => {}}
           >
-            Add a new habit
+            Add habit
           </AppButton>
         </VStack>
       </form>
