@@ -2,30 +2,63 @@ import { FormControl, FormLabel, VStack } from "@chakra-ui/react"
 import AppInput from "./AppInput"
 import ColorPicker from "./ColorPicker"
 import AppButton from "./AppButton"
+import { useState } from "react";
+
+// Habits structure
+export interface Habit {
+  id: string;
+  name: string;
+  color: string;
+}
+
+// Colors
+const AVAILABLE_COLORS = [
+    "#DAF7A6",
+    "#FFC300",
+    "#FF5733",
+    "#C70039",
+    "#900C3F",
+    "#581845",
+];
 
 const AppForm = () => {
+
+  // States
+  const [habitName, setHabitName] = useState<string>("")
+
+  // Handler
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+  };
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHabitName(event.target.value);
+  };
+  
   return (
     <section>
-      <form>
+      <form onSubmit={handleSubmit}>
         <VStack spacing={4}
         align="stretch"
         >
-          <FormControl id="habit-name">
-            <FormLabel>Your Habit:</FormLabel>
+          <FormControl>
+            <FormLabel htmlFor="habit-name">Add a new habit:</FormLabel>
             <AppInput
               placeholder="e.g. Drink more water"
-              value="Drink more Water"
+              value={habitName}
               type="text"
-              onChange={() =>{}}
+              onChange={handleOnChange}
               id="habit-name"
             />
           </FormControl>
-          <FormControl id="habit-color">
-            <FormLabel>Pick a color:</FormLabel>
+          <FormControl>
+            <FormLabel htmlFor="habit-color">Pick a color:</FormLabel>
             <ColorPicker
-              colors={[]}
+              colors={AVAILABLE_COLORS}
               selectedColor=""
               onColorSelect={() => {}}
+              id="habit-color"
             />
           </FormControl>
 

@@ -4,12 +4,13 @@ interface ColorPickerProps {
   colors: string[]; // Available colors
   selectedColor: string;
   onColorSelect: (color: string) => void;
+  id?: string // for label
 }
 
-const ColorPicker = ({colors, selectedColor, onColorSelect}: ColorPickerProps) => {
+const ColorPicker = ({colors, selectedColor, onColorSelect, id=""}: ColorPickerProps) => {
   return (
     // Container
-    <Stack direction="row">
+    <Stack direction="row" id={id} spacing={2}>
       {colors.map((color) => (
         <Box
         key={color}
@@ -19,7 +20,6 @@ const ColorPicker = ({colors, selectedColor, onColorSelect}: ColorPickerProps) =
         borderRadius = "full"
         boxSize="2rem"
         title={`Select ${color}`}
-
         />
       ))}
     </Stack>
