@@ -6,8 +6,8 @@ interface AppButtonProps {
   type?: "button" | "submit" | "reset";
 }
 
-const AppButton = ({children, onClick, type = "button"}: AppButtonProps) => {
-  return <Button onClick={onClick}>{children}</Button>
+const AppButton = ({children, onClick, type}: AppButtonProps) => {
+  return <Button onClick={onClick}>{children} type={type}</Button>
 }
 
 export default AppButton;
