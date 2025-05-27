@@ -13,6 +13,8 @@ const AppButton = ({children, onClick, type="button"}: AppButtonProps) => {
       type={type}
       size="lg"
       alignSelf="center"
+      textColor="#433E28"
+      textShadow='1px 1px rgb(83, 82, 82)'
       >{children}
     </Button>
   );

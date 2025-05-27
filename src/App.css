@@ -1,8 +1,6 @@
 #root {
   padding: 2rem;
   text-align: center;
-  background-color: #242424;
   height: 100vh;
-  color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+  background-image: url("./assets/bg.jpg");
 }

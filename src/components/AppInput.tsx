@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react"
+import { Box, Input } from "@chakra-ui/react"
 
 interface AppInputProps {
   placeholder: string;
@@ -10,6 +10,7 @@ interface AppInputProps {
 
 const AppInput = ({placeholder, value, onChange, id, type}: AppInputProps) => {
   return (
+    <Box boxShadow="dark-lg" bg="white">
   <Input
   placeholder={placeholder}
   value={value}
@@ -17,6 +18,7 @@ const AppInput = ({placeholder, value, onChange, id, type}: AppInputProps) => {
   id={id}
   type={type}
   />
+  </Box>
 );
 };
 

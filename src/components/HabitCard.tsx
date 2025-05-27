@@ -9,14 +9,15 @@ const HabitCard = ({habitName, color}: HabitCardProps) => {
   return (
     <Card bg="white"
     marginBottom={2}
+    boxShadow="dark-lg"
     >
       <CardHeader pl="5" bg={color}>
         <Text fontSize="20px" 
         fontWeight={"bold"} 
         textAlign="start"
-        textShadow='1px 1px rgb(52, 51, 51)'
+        textShadow='1px 1px rgb(83, 82, 82)'
         marginBottom={3}
-        textColor="white"
+        textColor="#433E28"
         >
           {habitName}
           </Text>

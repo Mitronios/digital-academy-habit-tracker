@@ -1,4 +1,4 @@
-import { Box, FormControl, FormLabel, VStack } from "@chakra-ui/react"
+import { FormControl, FormLabel, HStack, useToast, VStack } from "@chakra-ui/react"
 import AppInput from "./AppInput"
 import ColorPicker from "./ColorPicker"
 import AppButton from "./AppButton"
@@ -6,15 +6,11 @@ import { useState } from "react";
 
 // Colors
 const AVAILABLE_COLORS = [
-  "#8fbfec",
-  "#0960ae",
-  "#FFC300",
-  "#FF5733",
-  "#C70039",
-  "#920023",
-  "#581845",
-  "#ff7070",
-
+  "#FF746C",
+  "#83CCD2",
+  "#F68BA2",
+  "#E2CF88",
+  "#D8B0C8",
 ];
 
 // Habits structure
@@ -33,11 +29,28 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
 
   // States
   const [habitName, setHabitName] = useState<string>("")
-  const [PickedColor, setPickedColor] = useState<string>("#000000")
+  const [PickedColor, setPickedColor] = useState<string>("#F5F4D6")
+
+  // Toast
+  const toast = useToast();
+
 
   // Handler
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Check if input is empty
+    if (habitName.trim() === "") {
+      toast({
+        title: "Ups! Can't add empty habit.",
+        description: "Please enter a new habit.",
+        status: "info",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right",
+    })
+    return;
+    }
 
     // Define a new habit
     const newHabit: Habit = {
@@ -50,7 +63,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
     onAddHabit(newHabit);
     setHabitName("")
     // Handle color selection
-    setPickedColor("#000000")
+    setPickedColor("#F5F4D6")
 
   };
 
@@ -65,7 +78,12 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
         align="stretch"
         >
           <FormControl>
-            <FormLabel htmlFor="habit-name">Add a new habit:</FormLabel>
+            <FormLabel htmlFor="habit-name"
+            textColor="#9E905F"
+            textShadow='1px 1px rgb(83, 82, 82)'
+            >
+              Add a new habit:
+            </FormLabel>
             <AppInput
               placeholder="e.g. Drink more water"
               value={habitName}
@@ -74,27 +92,22 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
               id="habit-name"
             />
           </FormControl>
-
           <FormControl>
-            <FormLabel htmlFor="habit-color">Pick a color:</FormLabel>
-            <Box display="flex"
-            alignItems="center"
-            justifyContent="space-between"
+          <HStack spacing={4} justify="space-around" flexWrap="wrap">
+            <ColorPicker
+              colors={AVAILABLE_COLORS}
+              selectedColor={PickedColor}
+              onColorSelect={setPickedColor}
+              id="habit-color"
+            />
+            <AppButton
+              type="submit"
+              onClick={() => {}}
             >
-              <ColorPicker
-                colors={AVAILABLE_COLORS}
-                selectedColor={PickedColor}
-                onColorSelect={setPickedColor}
-                id="habit-color"
-              />
-              <AppButton
-                type="submit"
-                onClick={() => {}}
-              >
-              Add habit
-            </AppButton>
-          </Box>
-          </FormControl>
+            Add habit
+          </AppButton>
+          </HStack>
+        </FormControl>
           
         </VStack>
       </form>
