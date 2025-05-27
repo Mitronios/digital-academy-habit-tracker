@@ -5,9 +5,13 @@ interface HabitCardProps {
   habitName: string;
   color: string;
   habitId: string;
+  onEdit: (id: string, newName: string, newColor: string) => void;
+  onDelete: (id: string) => void;
+  onReset: boolean;
+  onResetComplete: () => void;
 }
 
-const HabitCard = ({habitName, color, habitId, ...rest}: HabitCardProps) => {
+const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onResetComplete}: HabitCardProps) => {
   return (
     <Card bg="white"
     marginBottom={2}

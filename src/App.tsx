@@ -44,12 +44,6 @@ function App() {
     setResetProgress(true)
   }
 
-  // Props passing down
-  const resetProps = {
-    onReset: resetProgress,
-    onResetComplete: handleResetCompleted
-  }
-
   return(
     <main>
       <Container maxW="container.lg" py={7}
@@ -96,7 +90,8 @@ function App() {
               habitName={habit.name}
               color={habit.color}
               habitId={habit.id}
-              {...resetProps}
+              onReset={resetProgress}
+              onResetComplete={handleResetCompleted}
               />
             ))}
            </VStack>
