@@ -7,14 +7,11 @@ interface HabitCardProps {
 
 const HabitCard = ({habitName, color}: HabitCardProps) => {
   return (
-    <Card boxShadow="md" bg="white">
-      <CardHeader pb="0">
-      <Flex alignItems="center">
-        <Box boxSize="20px" borderRadius="full" bg={color} mr={3}/>
-        <Text fontSize="20px" fontWeight={"semibold"}>
+    <Card bg="white">
+      <CardHeader pb="0" bg={color}>
+        <Text fontSize="20px" fontWeight={"bold"} textAlign="center">
           {habitName}
           </Text>
-      </Flex>
       </CardHeader>
       <CardBody>
         {/* TODO: Checkboxes */}
