@@ -2,14 +2,36 @@ import { Box, Container, Heading, VStack } from '@chakra-ui/react'
 import './App.css'
 import AppForm, { type Habit } from './components/AppForm'
 import AppButton from './components/AppButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import HabitCard from './components/HabitCard'
+
+// localStorage key
+const LOCAL_STORAGE_KEY = "myHabitTracker";
+
+// Check if habits exist on localStorage
+const localStorageHabits = (): Habit[] => {
+  try {
+    const storedHabits = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedHabits ?JSON.parse(storedHabits) : [];
+  } catch (error) {
+    console.error("Failed to get habits from localStorage", error);
+    return [];
+  }
+}
 
 function App() {
 
   // States
-  const [habits, setHabits] = useState<Habit[]>([]);
+  const [habits, setHabits] = useState<Habit[]>(localStorageHabits);
 
+  // Persist habits
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(habits));
+    } catch (error) {
+      console.error("Failed to save habits.", error);
+    }
+  }, [habits])
 
   // Handler
   const handleAddHabit = (newHabit: Habit) => {
@@ -18,10 +40,21 @@ function App() {
 
   return(
     <main>
-      <Container maxW="container.md" py={7}>
-        <VStack align="stretch">
+      <Container maxW="container.md" py={7}
+      minH="90%"
+      boxShadow="dark-lg"
+      borderRadius="2xl"
+      >
+        <VStack align="stretch"
+          boxShadow="lg"
+        >
           <Heading as="h1" 
-          size="xl" mb={4}>
+          size="xl" 
+          mb={4}
+          textAlign="start"
+          textColor="#9E905F"
+          textShadow='1px 1px rgb(83, 82, 82)'
+          >
             HabitTracker
           </Heading>
           <Box marginBottom={5}
@@ -34,7 +67,14 @@ function App() {
           {/* Render habits */}
           {habits.length > 0 && (
           <Box>
-            <Heading as="h2" size="md" mb={4}>
+            <Heading as="h2" 
+            size="md"
+             mb={4}
+             textAlign="start"
+             textColor="#9E905F"
+             textShadow='1px 1px rgb(83, 82, 82)'
+
+             >
               New Habits
             </Heading>
            <VStack spacing={3} align="stretch">
