@@ -1,4 +1,4 @@
-import { Box, Text, Checkbox, Progress, Flex, Icon, HStack } from "@chakra-ui/react";
+import { Box, Text, Checkbox, Progress, Flex, Icon} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
@@ -10,7 +10,7 @@ interface ProgressTrackingProps {
 
 const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingProps) => {
 
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
 
   // localStorage key
   const PROGRESS_KEY_LSTorage = `progress_${habitId}`;
@@ -60,23 +60,32 @@ const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingP
   }
   return (
     <Box p={4} borderWidth="1px" borderRadius="lg" position="relative">
-      <Text fontSize="lg" mb={3} fontWeight="bold">Weekly Progress</Text>
-      <HStack spacing={2}>
+      <Text fontSize="lg" mb={3} 
+      fontWeight="medium">
+        Weekly Progress
+      </Text>
+      <Flex wrap="wrap" justify="space-evenly">
         {daysOfWeek.map((day, index) => (
           <Checkbox
-            key={day}
+            key={index}
             isChecked={completedDays[index]}
             onChange={() => handleOnChangeCheckbox(index)}
             colorScheme="green"
-            size="lg"
+            size="sm"
+            mb="3"
           >
             {day}
           </Checkbox>
         ))}
-      </HStack>
+      </Flex>
 
       <Box mt={4}>
-        <Progress value={progressValue} size="md" colorScheme="green" borderRadius="md" />
+        <Progress 
+        value={progressValue} 
+        size="md" colorScheme="green" 
+        borderRadius="md" 
+        bg="lightgray"
+      />
       </Box>
 
       {sevenDaysStreak && (

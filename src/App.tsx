@@ -19,10 +19,12 @@ const localStorageHabits = (): Habit[] => {
   }
 }
 
+// App
 function App() {
 
   // States
   const [habits, setHabits] = useState<Habit[]>(localStorageHabits);
+  const [resetProgress, setResetProgress] = useState(false);
 
   // Persist habits
   useEffect(() => {
@@ -33,14 +35,24 @@ function App() {
     }
   }, [habits])
 
-  // Handler
+  // Handlers
   const handleAddHabit = (newHabit: Habit) => {
     setHabits((prevHabits) => [...prevHabits, newHabit]);
   }
 
+  const handleResetCompleted = () => {
+    setResetProgress(true)
+  }
+
+  // Props passing down
+  const resetProps = {
+    onReset: resetProgress,
+    onResetComplete: handleResetCompleted
+  }
+
   return(
     <main>
-      <Container maxW="container.md" py={7}
+      <Container maxW="container.lg" py={7}
       minH="90%"
       boxShadow="dark-lg"
       borderRadius="2xl"
@@ -83,13 +95,15 @@ function App() {
               key={habit.id}
               habitName={habit.name}
               color={habit.color}
+              habitId={habit.id}
+              {...resetProps}
               />
             ))}
            </VStack>
           </Box>
           )}
         </VStack>
-        <AppButton onClick={() => {}} type="button">
+        <AppButton onClick={handleResetCompleted} type="button">
             Reset tracking
         </AppButton>
       </Container>

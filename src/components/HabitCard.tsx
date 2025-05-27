@@ -1,11 +1,13 @@
 import {Card, CardHeader, CardBody, Text} from "@chakra-ui/react"
+import ProgressTracking from "./ProgressTracking";
 
 interface HabitCardProps {
   habitName: string;
-  color: string;  
+  color: string;
+  habitId: string;
 }
 
-const HabitCard = ({habitName, color}: HabitCardProps) => {
+const HabitCard = ({habitName, color, habitId, ...rest}: HabitCardProps) => {
   return (
     <Card bg="white"
     marginBottom={2}
@@ -23,7 +25,12 @@ const HabitCard = ({habitName, color}: HabitCardProps) => {
           </Text>
       </CardHeader>
       <CardBody>
-        {/* TODO: Checkboxes */}
+        <ProgressTracking 
+        onReset={false} 
+        onResetComplete={() => {}} 
+        habitId={habitId}
+        />
+        
       </CardBody>
     </Card>
   );
