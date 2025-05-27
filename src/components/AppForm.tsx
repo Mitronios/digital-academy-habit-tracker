@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, VStack } from "@chakra-ui/react"
+import { Box, FormControl, FormLabel, VStack } from "@chakra-ui/react"
 import AppInput from "./AppInput"
 import ColorPicker from "./ColorPicker"
 import AppButton from "./AppButton"
@@ -6,12 +6,15 @@ import { useState } from "react";
 
 // Colors
 const AVAILABLE_COLORS = [
-  "#DAF7A6",
+  "#8fbfec",
+  "#0960ae",
   "#FFC300",
   "#FF5733",
   "#C70039",
-  "#900C3F",
+  "#920023",
   "#581845",
+  "#ff7070",
+
 ];
 
 // Habits structure
@@ -30,7 +33,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
 
   // States
   const [habitName, setHabitName] = useState<string>("")
-  const [PickedColor, setPickedColor] = useState<string>("#ffffff")
+  const [PickedColor, setPickedColor] = useState<string>("#000000")
 
   // Handler
   const handleSubmit = (event: React.FormEvent) => {
@@ -47,7 +50,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
     onAddHabit(newHabit);
     setHabitName("")
     // Handle color selection
-    setPickedColor("#ffffff")
+    setPickedColor("#000000")
 
   };
 
@@ -71,22 +74,28 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
               id="habit-name"
             />
           </FormControl>
+
           <FormControl>
             <FormLabel htmlFor="habit-color">Pick a color:</FormLabel>
-            <ColorPicker
-              colors={AVAILABLE_COLORS}
-              selectedColor={PickedColor}
-              onColorSelect={setPickedColor}
-              id="habit-color"
-            />
+            <Box display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            >
+              <ColorPicker
+                colors={AVAILABLE_COLORS}
+                selectedColor={PickedColor}
+                onColorSelect={setPickedColor}
+                id="habit-color"
+              />
+              <AppButton
+                type="submit"
+                onClick={() => {}}
+              >
+              Add habit
+            </AppButton>
+          </Box>
           </FormControl>
-
-          <AppButton
-            type="submit"
-            onClick={() => {}}
-          >
-            Add habit
-          </AppButton>
+          
         </VStack>
       </form>
     </section>

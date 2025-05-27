@@ -11,7 +11,8 @@ const AppButton = ({children, onClick, type="button"}: AppButtonProps) => {
     <Button
       onClick={onClick} 
       type={type}
-      size="md"
+      size="lg"
+      alignSelf="center"
       >{children}
     </Button>
   );
