@@ -30,6 +30,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
 
   // States
   const [habitName, setHabitName] = useState<string>("")
+  const [PickedColor, setPickedColor] = useState<string>("#ffffff")
 
   // Handler
   const handleSubmit = (event: React.FormEvent) => {
@@ -39,11 +40,14 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
     const newHabit: Habit = {
       id: crypto.randomUUID(),
       name: habitName.trim(),
-      color: ""
+      color: PickedColor
     }
 
     // Handle the newHabit creation
     onAddHabit(newHabit);
+    setHabitName("")
+    // Handle color selection
+    setPickedColor("#ffffff")
 
   };
 
@@ -71,8 +75,8 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
             <FormLabel htmlFor="habit-color">Pick a color:</FormLabel>
             <ColorPicker
               colors={AVAILABLE_COLORS}
-              selectedColor=""
-              onColorSelect={() => {}}
+              selectedColor={PickedColor}
+              onColorSelect={setPickedColor}
               id="habit-color"
             />
           </FormControl>
