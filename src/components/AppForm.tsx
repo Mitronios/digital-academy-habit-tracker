@@ -4,6 +4,16 @@ import ColorPicker from "./ColorPicker"
 import AppButton from "./AppButton"
 import { useState } from "react";
 
+// Colors
+const AVAILABLE_COLORS = [
+  "#DAF7A6",
+  "#FFC300",
+  "#FF5733",
+  "#C70039",
+  "#900C3F",
+  "#581845",
+];
+
 // Habits structure
 export interface Habit {
   id: string;
@@ -11,19 +21,10 @@ export interface Habit {
   color: string;
 }
 
+// Form Props
 interface AppFormProps {
   onAddHabit: (newHabit: Habit) => void;
 }
-
-// Colors
-const AVAILABLE_COLORS = [
-    "#DAF7A6",
-    "#FFC300",
-    "#FF5733",
-    "#C70039",
-    "#900C3F",
-    "#581845",
-];
 
 const AppForm = ({onAddHabit}: AppFormProps) => {
 
