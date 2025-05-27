@@ -5,16 +5,28 @@ import { FaStar } from "react-icons/fa";
 interface ProgressTrackingProps {
   onReset: boolean;
   onResetComplete: () => void;
+  habitId: string;
 }
 
-const ProgressTracking = ({onReset, onResetComplete}: ProgressTrackingProps) => {
+const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingProps) => {
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  
+
+  // localStorage key
+  const PROGRESS_KEY_LSTorage = `progress_${habitId}`;
+
+  const storedProgressStatus = () => {
+    try {
+      const storedProgress = localStorage.getItem(PROGRESS_KEY_LSTorage);
+      return storedProgress ? JSON.parse(storedProgress) : new Array(daysOfWeek.length).fill(false);
+    } catch (error) {
+      console.error("Failed to get progress from localStorage", error);
+      return new Array(daysOfWeek.length).fill(false);
+    }
+  }
+
   // State
-  const [completedDays, setCompletedDays] = useState<boolean[]>(
-    new Array(daysOfWeek.length).fill(false)
-  );
+  const [completedDays, setCompletedDays] = useState<boolean[]>(storedProgressStatus);
 
   // Progress control
   const totalDays = daysOfWeek.length;
@@ -22,13 +34,23 @@ const ProgressTracking = ({onReset, onResetComplete}: ProgressTrackingProps) => 
   const progressValue = (completedCount / totalDays) * 100 // Percentage
   const sevenDaysStreak = completedCount === totalDays;
 
+  // Efect to handle localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(PROGRESS_KEY_LSTorage, JSON.stringify(completedDays));
+    } catch (error) {
+      console.error("Failed to save the progress", error)
+    }
+  }, [completedDays, PROGRESS_KEY_LSTorage])
+
   // Efect to handle reset
   useEffect(() => {
     if (onReset) {
       setCompletedDays(new Array(totalDays).fill(false));
+      localStorage.removeItem(PROGRESS_KEY_LSTorage);
       onResetComplete(); // The parent will now the reset is done
     }
-  }, [onReset, totalDays, onResetComplete])
+  }, [onReset, totalDays, onResetComplete, PROGRESS_KEY_LSTorage])
 
   // handler
   const handleOnChangeCheckbox = (index: number) => {
