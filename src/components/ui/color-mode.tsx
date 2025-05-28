@@ -4,10 +4,8 @@
 import {
   ColorModeScript, // Importa esto para la persistencia del tema
   IconButton,
-  Skeleton,
   Text,
   useColorMode, // Este hook te da el modo de color actual y la función para cambiarlo
-  useColorModeValue, // Este hook te permite elegir un valor basado en el modo de color
   type IconButtonProps,
 } from "@chakra-ui/react";
 import * as React from "react";

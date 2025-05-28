@@ -11,6 +11,7 @@ interface ProgressTrackingProps {
 const ProgressTracking = ({progress, onProgressChange}: ProgressTrackingProps) => {
 
   const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
+  // TODO: transform days into obj
 
   // Initial progress by default
   const defaultProgress = new Array(daysOfWeek.length).fill(false);

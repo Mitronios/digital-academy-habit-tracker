@@ -111,6 +111,8 @@ function App() {
   const filterHabits = habits.filter((habit) => 
     habit.name.toLowerCase().includes(search.toLowerCase()))
 
+  // TODO: useEffect to manage filter properlys
+
 
   return(
     <main>
@@ -120,6 +122,8 @@ function App() {
         minH="90%"
         boxShadow="dark-lg"
         borderRadius="2xl"
+        bg="rgba(255, 255, 255, 0.8)" // ← fondo blanco con transparencia
+        backdropFilter="blur(4px)"  
       >
         <VStack 
           align="stretch"
