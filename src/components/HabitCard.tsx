@@ -17,6 +17,11 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
   // Chakra modal handlers
   const editDisclosure = useDisclosure();
 
+  // Handler for edit and dele
+  const handleEditSave = (newName: string, newColor: string) => {
+    onEdit(habitId, newName, newColor);
+    editDisclosure.onClose();
+  }
 
   return (
     <Box 
@@ -57,9 +62,10 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
         transition="opacity 0.2s" 
       >
         <IconButton aria-label="Edit" 
-          icon={<FaEdit/>} 
+          icon={<FaEdit/>}
+          colorScheme="yellow"
           size="sm"
-          onClick={() => {}}
+          onClick={editDisclosure.onOpen}
 
         />
         <IconButton aria-label="Delete"
@@ -74,9 +80,9 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
       <EditHabitModal
         isOpen={editDisclosure.isOpen}
         onClose={editDisclosure.onClose}
-        initialName=""
-        initialColor=""
-        onSave={() => {}}
+        initialName={habitName}
+        initialColor={color}
+        onSave={handleEditSave}
       />
     </Box>
   );
