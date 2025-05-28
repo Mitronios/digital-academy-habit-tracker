@@ -4,6 +4,7 @@ import AppForm, { type Habit } from './components/AppForm'
 import AppButton from './components/AppButton'
 import { useEffect, useState } from 'react'
 import HabitCard from './components/HabitCard'
+import AppInput from './components/AppInput'
 
 // localStorage keys
 const LOCAL_STORAGE_KEY = "myHabitTracker";
@@ -25,6 +26,7 @@ function App() {
 
   // States
   const [habits, setHabits] = useState<Habit[]>(localStorageHabits);
+  const [search, setSearch] = useState<string>("");
 
   
   // Progress
@@ -105,6 +107,11 @@ function App() {
     setHabits(removeHabit);
   }
 
+  // Search
+  const filterHabits = habits.filter((habit) => 
+    habit.name.toLowerCase().includes(search.toLowerCase()))
+
+
   return(
     <main>
       <Container 
@@ -137,9 +144,25 @@ function App() {
           <AppForm 
             onAddHabit={handleAddHabit}/>
           </Box>
+          
+          {/*Search Habits*/}
+          {habits.length > 0 && (
+          <VStack
+            align="stretch" mb={4} spacing={4}
+          >
+            <AppInput
+              type="text"
+              id="habit-search"
+              value={search}
+              placeholder="Search your habits by name"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </VStack>
+
+          )}
 
           {/* Render habits */}
-          {habits.length > 0 && (
+          {filterHabits.length > 0 && (
           <Box>
             <Heading 
               as="h2" 
@@ -154,7 +177,7 @@ function App() {
            <VStack 
             spacing={3} 
             align="stretch">
-            {habits.map((habit) => (
+            {filterHabits.map((habit) => (
               <HabitCard 
                 key={habit.id}
                 habitName={habit.name}
