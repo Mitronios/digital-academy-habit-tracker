@@ -8,13 +8,13 @@ interface HabitCardProps {
   habitName: string;
   color: string;
   habitId: string;
+  progress: boolean[];
+  onProgressChange: (progress: boolean[]) => void;
   onEdit: (id: string, newName: string, newColor: string) => void;
   onDelete: (id: string) => void;
-  onReset: boolean;
-  onResetComplete: () => void;
 }
 
-const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onResetComplete}: HabitCardProps) => {
+const HabitCard = ({habitName, color, habitId, onProgressChange, onEdit, onDelete, progress}: HabitCardProps) => {
   // Chakra modal handlers
   const editDisclosure = useDisclosure();
 
@@ -60,9 +60,9 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
         <CardBody>
 
           <ProgressTracking 
-          onReset={false} 
-          onResetComplete={() => {}} 
+          onProgressChange={onProgressChange}
           habitId={habitId}
+          progress={progress}
           />
         </CardBody>
       </Card>

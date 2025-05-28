@@ -3,30 +3,20 @@ import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 interface ProgressTrackingProps {
-  onReset: boolean;
-  onResetComplete: () => void;
+  progress: boolean[];
+  onProgressChange: (progress: boolean[]) => void;
   habitId: string;
 }
 
-const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingProps) => {
+const ProgressTracking = ({progress, onProgressChange, habitId}: ProgressTrackingProps) => {
 
   const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
 
-  // localStorage key
-  const PROGRESS_KEY_LSTorage = `progress_${habitId}`;
-
-  const storedProgressStatus = () => {
-    try {
-      const storedProgress = localStorage.getItem(PROGRESS_KEY_LSTorage);
-      return storedProgress ? JSON.parse(storedProgress) : new Array(daysOfWeek.length).fill(false);
-    } catch (error) {
-      console.error("Failed to get progress from localStorage", error);
-      return new Array(daysOfWeek.length).fill(false);
-    }
-  }
+  // Initial progress by default
+  const defaultProgress = new Array(daysOfWeek.length).fill(false);
 
   // State
-  const [completedDays, setCompletedDays] = useState<boolean[]>(storedProgressStatus);
+  const [completedDays, setCompletedDays] = useState<boolean[]>(progress ||defaultProgress);
 
   // Progress control
   const totalDays = daysOfWeek.length;
@@ -34,29 +24,17 @@ const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingP
   const progressValue = (completedCount / totalDays) * 100 // Percentage
   const sevenDaysStreak = completedCount === totalDays;
 
-  // Efect to handle localStorage
+  // Efect to handle progress
   useEffect(() => {
-    try {
-      localStorage.setItem(PROGRESS_KEY_LSTorage, JSON.stringify(completedDays));
-    } catch (error) {
-      console.error("Failed to save the progress", error)
-    }
-  }, [completedDays, PROGRESS_KEY_LSTorage])
-
-  // Efect to handle reset
-  useEffect(() => {
-    if (onReset) {
-      setCompletedDays(new Array(totalDays).fill(false));
-      localStorage.removeItem(PROGRESS_KEY_LSTorage);
-      onResetComplete(); // The parent will now the reset is done
-    }
-  }, [onReset, totalDays, onResetComplete, PROGRESS_KEY_LSTorage])
+      setCompletedDays(progress || defaultProgress);
+  }, [progress])
 
   // handler
   const handleOnChangeCheckbox = (index: number) => {
-    const newCompletedDays = [...completedDays];
-    newCompletedDays[index] = !newCompletedDays[index]; // If true now false
-    setCompletedDays(newCompletedDays);
+    const progressUpdate = [...completedDays];
+    progressUpdate[index] = !progressUpdate[index]; // If true now false
+    setCompletedDays(progressUpdate);
+    onProgressChange(progressUpdate) // Lift state up
   }
   return (
     <Box p={4} borderWidth="1px" borderRadius="lg" position="relative">
