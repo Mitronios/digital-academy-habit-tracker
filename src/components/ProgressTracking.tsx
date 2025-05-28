@@ -71,7 +71,7 @@ const ProgressTracking = ({onReset, onResetComplete, habitId}: ProgressTrackingP
             isChecked={completedDays[index]}
             onChange={() => handleOnChangeCheckbox(index)}
             colorScheme="green"
-            size="sm"
+            size={{base:"sm", md: "md"}}
             mb="3"
           >
             {day}

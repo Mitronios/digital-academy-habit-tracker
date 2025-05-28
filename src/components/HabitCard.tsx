@@ -32,8 +32,13 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
       marginBottom={2}
       boxShadow="dark-lg"
       >
-        <CardHeader pl="5" bg={color}>
-          <Text fontSize="20px" 
+        <CardHeader 
+          padding="32px" 
+          bg={color}
+          >
+
+          <Text 
+          fontSize={{base: "16px", md: "21px" }}
           fontWeight={"bold"} 
           textAlign="start"
           textShadow='1px 1px rgb(83, 82, 82)'
@@ -60,19 +65,20 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
         top={2}
         right={2}
         opacity={{base: 1, md:0}}
-        transition="opacity 0.2s" 
+        transition="opacity 0.2s"
+        spacing={2}
       >
         <IconButton aria-label="Edit" 
           icon={<FaEdit/>}
           colorScheme="yellow"
-          size="sm"
+          size={{base: "xs", md: "sm"}}
           onClick={editDisclosure.onOpen}
 
         />
         <IconButton aria-label="Delete"
           icon={<FaTrash/>}
           colorScheme="red"
-          size="sm"
+          size={{base: "xs", md: "sm"}}
           onClick={() => {}}
         />
       </HStack>
