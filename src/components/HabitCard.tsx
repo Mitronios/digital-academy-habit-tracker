@@ -1,4 +1,4 @@
-import {Card, CardHeader, CardBody, Text, HStack, Box, IconButton, useDisclosure} from "@chakra-ui/react"
+import {Card, CardHeader, CardBody, Text, HStack, Box, IconButton, useDisclosure, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, Button} from "@chakra-ui/react"
 import ProgressTracking from "./ProgressTracking";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditHabitModal from "./EditHabitModal";
@@ -28,6 +28,7 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
       position="relative"
       _hover={{ '.actions': { opacity: 1 } }}
     >
+
       <Card bg="white"
       marginBottom={2}
       boxShadow="dark-lg"
@@ -36,7 +37,6 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
           padding="32px" 
           bg={color}
           >
-
           <Text 
           fontSize={{base: "16px", md: "21px" }}
           fontWeight={"bold"} 
@@ -49,12 +49,12 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
             </Text>
         </CardHeader>
         <CardBody>
+
           <ProgressTracking 
           onReset={false} 
           onResetComplete={() => {}} 
           habitId={habitId}
           />
-          
         </CardBody>
       </Card>
 
@@ -91,6 +91,40 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
         initialColor={color}
         onSave={handleEditSave}
       />
+
+      {/* Delete dialog */}
+      <AlertDialog 
+        isOpen
+        leastDestructiveRef
+        onClose
+      >
+        <AlertDialogOverlay/>
+        <AlertDialogContent>
+          <AlertDialogHeader
+            bg="cadetblue"
+          >
+            Delete Habit
+          </AlertDialogHeader>
+          <AlertDialogBody
+            fontWeight="medium"
+          >
+            Are your sure? This action cannot be undone.
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button
+              colorScheme="blue"
+              marginRight={2}
+            >
+              Cancel
+            </Button>
+            <Button
+              colorScheme="pink"
+            >
+              Confirm Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Box>
   );
 };
