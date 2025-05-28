@@ -10,9 +10,19 @@ import { Modal,
   Button } 
   from "@chakra-ui/react";
 
-const EditHabitModal = () => {
+interface EditHabitModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialName: string;
+  initialColor: string;
+  onSave: (newName: string, newColor: string) => void;
+}
+  
+
+const EditHabitModal = ({isOpen, onClose, initialName, 
+  initialColor, onSave }: EditHabitModalProps) => {
   return (
-    <Modal isOpen={true} onClose={()=> {}}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit Habit</ModalHeader>
