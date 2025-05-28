@@ -44,6 +44,26 @@ function App() {
     setResetProgress(true)
   }
 
+  // Handle modal edit-delete
+  const handleEditHabit = (habitId: string, newName: string, newColor: string) => {
+    const newValues = habits.map(habit => {
+      if (habit.id === habitId) {
+        return {
+          ...habit,
+          name: newName,
+          newColor
+        }
+      }
+      return habit;
+    })
+    setHabits(newValues);
+  }
+
+  const handleDeleteHabit = (habitId: string) => {
+    const removeHabit = habits.filter((habit) => habit.id !== habitId)
+    setHabits(removeHabit);
+  }
+
   return(
     <main>
       <Container maxW="container.lg" py={7}
@@ -92,6 +112,8 @@ function App() {
               habitId={habit.id}
               onReset={resetProgress}
               onResetComplete={handleResetCompleted}
+              onEdit={handleEditHabit}
+              onDelete={handleDeleteHabit}
               />
             ))}
            </VStack>
