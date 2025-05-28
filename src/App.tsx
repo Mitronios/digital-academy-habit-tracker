@@ -5,8 +5,9 @@ import AppButton from './components/AppButton'
 import { useEffect, useState } from 'react'
 import HabitCard from './components/HabitCard'
 
-// localStorage key
+// localStorage keys
 const LOCAL_STORAGE_KEY = "myHabitTracker";
+const LOCAL_STORAGE_PROGRESS_KEY = "myProgress";
 
 // Check if habits exist on localStorage
 const localStorageHabits = (): Habit[] => {
@@ -24,7 +25,20 @@ function App() {
 
   // States
   const [habits, setHabits] = useState<Habit[]>(localStorageHabits);
-  const [resetProgress, setResetProgress] = useState(false);
+
+  
+  // Progress
+  const getProgress = (): Record<string, boolean[]> => {
+    try {
+      const storedProgress = localStorage.getItem(LOCAL_STORAGE_PROGRESS_KEY);
+      return storedProgress ? JSON.parse(storedProgress): {};
+    } catch (error) {
+      console.error("Failed to load progress", error);
+      return {}
+    }
+  }
+  
+  const [progress, setProgress] = useState<Record<string, boolean[]>>(getProgress);
 
   // Persist habits
   useEffect(() => {
@@ -35,13 +49,39 @@ function App() {
     }
   }, [habits])
 
+  // Persist progress
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_PROGRESS_KEY, JSON.stringify(progress))
+    } catch (error) {
+      console.error("Failed to save progress", error);    
+    }
+  }, [progress])
+
   // Handlers
   const handleAddHabit = (newHabit: Habit) => {
     setHabits((prevHabits) => [...prevHabits, newHabit]);
   }
 
+  // Progress update
+  const handleProgressChange = (habitId: string, newProgress: boolean[]) => {
+    setProgress(prev => ({...prev, [habitId]: newProgress}));
+  }
+
+  // Reset progress
   const handleResetCompleted = () => {
-    setResetProgress(true)
+    const resetProgress: Record<string, boolean[]> = {};
+
+    habits.forEach(habit => {
+      resetProgress[habit.id] = new Array(7).fill(false);
+    })
+    setProgress(resetProgress);
+
+    try {
+      localStorage.removeItem(LOCAL_STORAGE_PROGRESS_KEY);
+    } catch (error) {
+      console.error("Failed to reset progress from localStorage", error);
+    }
   }
 
   // Handle modal edit-delete
@@ -110,8 +150,8 @@ function App() {
               habitName={habit.name}
               color={habit.color}
               habitId={habit.id}
-              onReset={resetProgress}
-              onResetComplete={handleResetCompleted}
+              progress={progress[habit.id]}
+              onProgressChange={(newProgress) => handleProgressChange(habit.id, newProgress)}
               onEdit={handleEditHabit}
               onDelete={handleDeleteHabit}
               />
