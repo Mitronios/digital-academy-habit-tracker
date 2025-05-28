@@ -38,6 +38,7 @@ function App() {
     }
   }
   
+  // Progress state
   const [progress, setProgress] = useState<Record<string, boolean[]>>(getProgress);
 
   // Persist habits
@@ -63,7 +64,7 @@ function App() {
     setHabits((prevHabits) => [...prevHabits, newHabit]);
   }
 
-  // Progress update
+  // Update progress
   const handleProgressChange = (habitId: string, newProgress: boolean[]) => {
     setProgress(prev => ({...prev, [habitId]: newProgress}));
   }
@@ -106,66 +107,78 @@ function App() {
 
   return(
     <main>
-      <Container maxW="container.lg" py={7}
-      minH="90%"
-      boxShadow="dark-lg"
-      borderRadius="2xl"
+      <Container 
+        maxW="container.lg" 
+        py={7}
+        minH="90%"
+        boxShadow="dark-lg"
+        borderRadius="2xl"
       >
-        <VStack align="stretch"
+        <VStack 
+          align="stretch"
           boxShadow="lg"
         >
-          <Heading as="h1" 
-          size="xl" 
-          mb={4}
-          textAlign="start"
-          textColor="#9E905F"
-          textShadow='1px 1px rgb(83, 82, 82)'
-          >
-            HabitTracker
+          <Heading 
+            as="h1" 
+            size="xl" 
+            mb={4}
+            textAlign="start"
+            textColor="#9E905F"
+            textShadow='1px 1px rgb(83, 82, 82)'
+          >HabitTracker
           </Heading>
-          <Box marginBottom={5}
-          borderBottom='2px' 
-          borderColor='gray.200'
-          paddingBottom={3}
+
+          <Box 
+            marginBottom={5}
+            borderBottom='2px' 
+            borderColor='gray.200'
+            paddingBottom={3}
           >
-          <AppForm onAddHabit={handleAddHabit}/>
+          <AppForm 
+            onAddHabit={handleAddHabit}/>
           </Box>
+
           {/* Render habits */}
           {habits.length > 0 && (
           <Box>
-            <Heading as="h2" 
-            size="md"
-             mb={4}
-             textAlign="start"
-             textColor="#9E905F"
-             textShadow='1px 1px rgb(83, 82, 82)'
-
-             >
-              New Habits
+            <Heading 
+              as="h2" 
+              size="md"
+              mb={4}
+              textAlign="start"
+              textColor="#9E905F"
+              textShadow='1px 1px rgb(83, 82, 82)'
+             >New Habits
             </Heading>
-           <VStack spacing={3} align="stretch">
+
+           <VStack 
+            spacing={3} 
+            align="stretch">
             {habits.map((habit) => (
               <HabitCard 
-              key={habit.id}
-              habitName={habit.name}
-              color={habit.color}
-              habitId={habit.id}
-              progress={progress[habit.id]}
-              onProgressChange={(newProgress) => handleProgressChange(habit.id, newProgress)}
-              onEdit={handleEditHabit}
-              onDelete={handleDeleteHabit}
+                key={habit.id}
+                habitName={habit.name}
+                color={habit.color}
+                habitId={habit.id}
+                progress={progress[habit.id]}
+                onProgressChange={(newProgress) => handleProgressChange(habit.id, newProgress)}
+                onEdit={handleEditHabit}
+                onDelete={handleDeleteHabit}
               />
             ))}
            </VStack>
           </Box>
           )}
         </VStack>
-        <AppButton onClick={handleResetCompleted} type="button">
-            Reset tracking
+
+        <AppButton 
+          onClick={handleResetCompleted} 
+          type="button">
+          Reset tracking
         </AppButton>
       </Container>
     </main>   
   )
 }
 
-export default App
+export default App;

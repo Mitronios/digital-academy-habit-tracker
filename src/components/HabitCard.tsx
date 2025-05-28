@@ -15,13 +15,14 @@ interface HabitCardProps {
 }
 
 const HabitCard = ({habitName, color, habitId, onProgressChange, onEdit, onDelete, progress}: HabitCardProps) => {
+
   // Chakra modal handlers
   const editDisclosure = useDisclosure();
 
   const deleteDisclosure = useDisclosure();
   const cancelRef = useRef(null)
 
-  // Handler for edit and dele
+  // Handler for edit and delete
   const handleEditSave = (newName: string, newColor: string) => {
     onEdit(habitId, newName, newColor);
     editDisclosure.onClose();
@@ -37,10 +38,10 @@ const HabitCard = ({habitName, color, habitId, onProgressChange, onEdit, onDelet
       position="relative"
       _hover={{ '.actions': { opacity: 1 } }}
     >
-
-      <Card bg="white"
-      marginBottom={2}
-      boxShadow="dark-lg"
+      <Card 
+        bg="white"
+        marginBottom={2}
+        boxShadow="dark-lg"
       >
         <CardHeader 
           padding="32px" 
@@ -53,16 +54,15 @@ const HabitCard = ({habitName, color, habitId, onProgressChange, onEdit, onDelet
           textShadow='1px 1px rgb(83, 82, 82)'
           marginBottom={3}
           textColor="#433E28"
-          >
-            {habitName}
-            </Text>
+          >{habitName}
+          </Text>
         </CardHeader>
+        
         <CardBody>
-
           <ProgressTracking 
-          onProgressChange={onProgressChange}
-          habitId={habitId}
-          progress={progress}
+            onProgressChange={onProgressChange}
+            habitId={habitId}
+            progress={progress}
           />
         </CardBody>
       </Card>
@@ -77,14 +77,15 @@ const HabitCard = ({habitName, color, habitId, onProgressChange, onEdit, onDelet
         transition="opacity 0.2s"
         spacing={2}
       >
-        <IconButton aria-label="Edit" 
+        <IconButton 
+          aria-label="Edit" 
           icon={<FaEdit/>}
           colorScheme="yellow"
           size={{base: "xs", md: "sm"}}
           onClick={editDisclosure.onOpen}
-
         />
-        <IconButton aria-label="Delete"
+        <IconButton 
+          aria-label="Delete"
           icon={<FaTrash/>}
           colorScheme="red"
           size={{base: "xs", md: "sm"}}

@@ -56,8 +56,13 @@ const EditHabitModal = ({isOpen, onClose, initialName,
             mb={3}
             onChange={onChangeName}
           />
-          <RadioGroup value={newColor} onChange={onChangeColor}>
-            <HStack spacing={3} wrap="wrap">
+          <RadioGroup 
+            value={newColor} 
+            onChange={onChangeColor}>
+            <HStack 
+              spacing={3} 
+              wrap="wrap">
+              
               {AVAILABLE_COLORS.map((color) => (
                 <Radio 
                   key={color} 
@@ -76,11 +81,17 @@ const EditHabitModal = ({isOpen, onClose, initialName,
             </HStack>
           </RadioGroup>
         </ModalBody>
+
         <ModalFooter>
-          <Button mr={3} onClick={onClose}>
-            Cancel
+          <Button 
+            mr={3} 
+            onClick={onClose}
+            >Cancel
           </Button>
-          <Button colorScheme="teal" onClick={() => onSave(newName, newColor)}>
+
+          <Button 
+            colorScheme="teal" 
+            onClick={() => onSave(newName, newColor)}>
             Save
           </Button>
         </ModalFooter>

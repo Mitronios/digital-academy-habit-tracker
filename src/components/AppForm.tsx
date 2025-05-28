@@ -67,6 +67,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
 
   };
 
+  // Component
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHabitName(event.target.value);
   };
@@ -78,7 +79,8 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
         align="stretch"
         >
           <FormControl>
-            <FormLabel htmlFor="habit-name"
+            <FormLabel 
+            htmlFor="habit-name"
             textColor="#9E905F"
             textShadow='1px 1px rgb(83, 82, 82)'
             >
@@ -92,6 +94,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
               id="habit-name"
             />
           </FormControl>
+
           <FormControl>
           <HStack spacing={4} justify="space-around" flexWrap="wrap">
             <ColorPicker
@@ -115,4 +118,4 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
   )
 }
 
-export default AppForm
+export default AppForm;

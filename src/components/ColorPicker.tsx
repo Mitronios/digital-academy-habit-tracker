@@ -12,7 +12,8 @@ const ColorPicker = ({colors, selectedColor, onColorSelect, id=""}: ColorPickerP
     // Container
     <Wrap direction="row" id={id} spacing={2}>
       {colors.map((color) => (
-       <WrapItem  key={color}>
+       <WrapItem  
+        key={color}>
           <Box
           boxShadow="dark-lg"
           bg={color}

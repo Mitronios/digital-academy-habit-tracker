@@ -8,7 +8,7 @@ interface ProgressTrackingProps {
   habitId: string;
 }
 
-const ProgressTracking = ({progress, onProgressChange, habitId}: ProgressTrackingProps) => {
+const ProgressTracking = ({progress, onProgressChange}: ProgressTrackingProps) => {
 
   const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
 
@@ -36,13 +36,22 @@ const ProgressTracking = ({progress, onProgressChange, habitId}: ProgressTrackin
     setCompletedDays(progressUpdate);
     onProgressChange(progressUpdate) // Lift state up
   }
+
   return (
-    <Box p={4} borderWidth="1px" borderRadius="lg" position="relative">
-      <Text fontSize="lg" mb={3} 
-      fontWeight="medium">
+    <Box 
+      p={4} 
+      borderWidth="1px" 
+      borderRadius="lg" 
+      position="relative">
+      <Text 
+        fontSize="lg" mb={3} 
+        fontWeight="medium">
         Weekly Progress
       </Text>
-      <Flex wrap="wrap" justify="space-evenly">
+      <Flex 
+        wrap="wrap" 
+        justify="space-evenly">
+        
         {daysOfWeek.map((day, index) => (
           <Checkbox
             key={index}
@@ -51,14 +60,15 @@ const ProgressTracking = ({progress, onProgressChange, habitId}: ProgressTrackin
             colorScheme="green"
             size={{base:"sm", md: "md"}}
             mb="3"
-          >
-            {day}
+          >{day}
           </Checkbox>
         ))}
       </Flex>
 
-      <Box mt={4}>
-        <Progress 
+      <Box 
+        mt={4}
+      >
+      <Progress 
         value={progressValue} 
         size="md" colorScheme="green" 
         borderRadius="md" 
@@ -78,7 +88,11 @@ const ProgressTracking = ({progress, onProgressChange, habitId}: ProgressTrackin
           borderRadius="full"
           boxShadow="md"
         >
-          <Icon as={FaStar} w={6} h={6} color="orange" />
+          <Icon 
+            as={FaStar} 
+            w={6} h={6} 
+            color="orange" 
+          />
         </Flex>
       )}
     </Box>

@@ -10,7 +10,9 @@ interface AppInputProps {
 
 const AppInput = ({placeholder, value, onChange, id, type}: AppInputProps) => {
   return (
-    <Box boxShadow="dark-lg" bg="white">
+    <Box 
+      boxShadow="dark-lg" 
+      bg="white">
   <Input
   placeholder={placeholder}
   value={value}
