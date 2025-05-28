@@ -2,6 +2,7 @@ import {Card, CardHeader, CardBody, Text, HStack, Box, IconButton, useDisclosure
 import ProgressTracking from "./ProgressTracking";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditHabitModal from "./EditHabitModal";
+import { useRef } from "react";
 
 interface HabitCardProps {
   habitName: string;
@@ -17,10 +18,18 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
   // Chakra modal handlers
   const editDisclosure = useDisclosure();
 
+  const deleteDisclosure = useDisclosure();
+  const cancelRef = useRef(null)
+
   // Handler for edit and dele
   const handleEditSave = (newName: string, newColor: string) => {
     onEdit(habitId, newName, newColor);
     editDisclosure.onClose();
+  }
+
+  const handleDeleteHabit = (habitId: string) => {
+    onDelete(habitId);
+    deleteDisclosure.onClose();
   }
 
   return (
@@ -79,7 +88,7 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
           icon={<FaTrash/>}
           colorScheme="red"
           size={{base: "xs", md: "sm"}}
-          onClick={() => {}}
+          onClick={deleteDisclosure.onOpen}
         />
       </HStack>
 
@@ -94,9 +103,9 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
 
       {/* Delete dialog */}
       <AlertDialog 
-        isOpen
-        leastDestructiveRef
-        onClose
+        isOpen={deleteDisclosure.isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={deleteDisclosure.onClose}
       >
         <AlertDialogOverlay/>
         <AlertDialogContent>
@@ -114,11 +123,14 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
             <Button
               colorScheme="blue"
               marginRight={2}
+              ref={cancelRef}
+              onClick={deleteDisclosure.onClose}
             >
               Cancel
             </Button>
             <Button
               colorScheme="pink"
+              onClick={() => handleDeleteHabit(habitId)}
             >
               Confirm Delete
             </Button>
