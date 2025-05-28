@@ -26,6 +26,7 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
   return (
     <Box 
       position="relative"
+      _hover={{ '.actions': { opacity: 1 } }}
     >
       <Card bg="white"
       marginBottom={2}
@@ -58,7 +59,7 @@ const HabitCard = ({habitName, color, habitId, onEdit, onDelete, onReset, onRese
         position="absolute"
         top={2}
         right={2}
-        opacity={0}
+        opacity={{base: 1, md:0}}
         transition="opacity 0.2s" 
       >
         <IconButton aria-label="Edit" 

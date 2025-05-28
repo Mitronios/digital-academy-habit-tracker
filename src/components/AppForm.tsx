@@ -5,7 +5,7 @@ import AppButton from "./AppButton"
 import { useState } from "react";
 
 // Colors
-const AVAILABLE_COLORS = [
+export const AVAILABLE_COLORS = [
   "#FF746C",
   "#83CCD2",
   "#F68BA2",

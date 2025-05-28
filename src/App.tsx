@@ -51,7 +51,7 @@ function App() {
         return {
           ...habit,
           name: newName,
-          newColor
+          color: newColor
         }
       }
       return habit;
