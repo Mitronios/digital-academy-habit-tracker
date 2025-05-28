@@ -43,7 +43,10 @@ const ProgressTracking = ({progress, onProgressChange}: ProgressTrackingProps) =
       p={4} 
       borderWidth="1px" 
       borderRadius="lg" 
-      position="relative">
+      position="relative"
+      boxShadow="dark-lg"
+      bg="linear-gradient(90deg,rgb(255, 255, 255) 0%, rgb(214, 214, 214) 100%, rgb(251, 242, 242) 100%);"
+      >
       <Text 
         fontSize="lg" mb={3} 
         fontWeight="medium">

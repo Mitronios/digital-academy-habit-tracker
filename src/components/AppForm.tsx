@@ -6,11 +6,11 @@ import { useState } from "react";
 
 // Colors
 export const AVAILABLE_COLORS = [
-  "#FF746C",
-  "#83CCD2",
-  "#F68BA2",
-  "#E2CF88",
-  "#D8B0C8",
+  "#FF746C50",
+  "#83CCD2750",
+  "#F68BA250",
+  "#E2CF8850",
+  "#D8B0C850",
 ];
 
 // Habits structure
@@ -29,7 +29,7 @@ const AppForm = ({onAddHabit}: AppFormProps) => {
 
   // States
   const [habitName, setHabitName] = useState<string>("")
-  const [PickedColor, setPickedColor] = useState<string>("#F5F4D6")
+  const [PickedColor, setPickedColor] = useState<string>("#F5F4D650")
 
   // Toast
   const toast = useToast();

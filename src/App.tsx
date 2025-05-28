@@ -122,8 +122,6 @@ function App() {
         minH="90%"
         boxShadow="dark-lg"
         borderRadius="2xl"
-        bg="rgba(255, 255, 255, 0.8)" // ← fondo blanco con transparencia
-        backdropFilter="blur(4px)"  
       >
         <VStack 
           align="stretch"
@@ -180,7 +178,9 @@ function App() {
 
            <VStack 
             spacing={3} 
-            align="stretch">
+            align="stretch"
+            mb={2}
+            >
             {filterHabits.map((habit) => (
               <HabitCard 
                 key={habit.id}
