@@ -5,11 +5,17 @@ import { Modal,
   ModalCloseButton, 
   ModalBody, 
   Input, 
-  Select, 
   ModalFooter, 
-  Button } 
+  Button, 
+  RadioGroup,
+  HStack,
+  Radio,
+  Box} 
   from "@chakra-ui/react";
 import { useState } from "react";
+
+import { AVAILABLE_COLORS } from "./AppForm";
+
 
 interface EditHabitModalProps {
   isOpen: boolean;
@@ -32,8 +38,9 @@ const EditHabitModal = ({isOpen, onClose, initialName,
       setNewName(event.target.value);
     
     }
-    const onChangeColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setNewColor(event.target.value);
+
+    const onChangeColor = (newColor: React.SetStateAction<string>) => {
+      setNewColor(newColor)
     }
 
   return (
@@ -49,16 +56,25 @@ const EditHabitModal = ({isOpen, onClose, initialName,
             mb={3}
             onChange={onChangeName}
           />
-          <Select
-            value={newColor}
-            onChange={onChangeColor}
-          >
-            <option value="#FF746C">1</option>
-            <option value="#83CCD2">2</option>
-            <option value="#F68BA2">3</option>
-            <option value="#E2CF88">4</option>
-            <option value="#D8B0C8">5</option>
-          </Select>
+          <RadioGroup value={newColor} onChange={onChangeColor}>
+            <HStack spacing={3} wrap="wrap">
+              {AVAILABLE_COLORS.map((color) => (
+                <Radio 
+                  key={color} 
+                  value={color}
+                >
+                  <Box
+                    w="6"
+                    h="6"
+                    bg={color}
+                    borderRadius="full"
+                    border="2px solid gray"
+                    cursor="pointer"
+                  />
+                </Radio>
+              ))}
+            </HStack>
+          </RadioGroup>
         </ModalBody>
         <ModalFooter>
           <Button mr={3} onClick={onClose}>
