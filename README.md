@@ -1,54 +1,76 @@
-# React + TypeScript + Vite
+# 📘 Habit Tracker App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Habit Tracker application! This project is a simple yet effective tool designed to help you monitor and build consistent habits. 
 
-Currently, two official plugins are available:
+Developed as part of the **Frontend Development module at Digital Academy**, it focuses on demonstrating core **React fundamentals**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Habit Creation**: Easily add new habits with a custom name and a color from a predefined palette.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Daily Tracking**: Mark your habits as completed for each day of the week.
+
+- **Streak Tracking**: See your current consecutive streak for each habit, encouraging consistency.
+
+- **Habit Management**: Edit or delete existing habits.
+
+- **Search Functionality**: Quickly find specific habits by typing their name.
+
+- **Persistent Storage**: Your habits and progress are saved locally in your browser's storage, so your data persists even if you close the app.
+
+- **Responsive Design**: Built with Chakra UI for a modern and adaptable user interface across different screen sizes.
+
+---
+
+## 🛠️ Technologies Used
+
+- **React** – A JavaScript library for building user interfaces.
+
+- **TypeScript** – A typed superset of JavaScript that compiles to plain JavaScript.
+
+- **Vite** – A fast build tool that provides a lightning-fast development experience.
+
+- **Chakra UI** – A simple, modular, and accessible component library for React.
+
+- **React-icons**
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to get a copy of the project up and running on your local machine.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (includes npm)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/MiguelAngelGonzalesMelgar/digital-academy-habit-tracker.git
+  ```
+
+2. Navigate into the project directory:
+  ```bash
+   cd digital-academy-habit-tracker
+  ```
+
+3. Install dependecies:
+  ```bash
+  npm install
+  ```
+
+4. Start development server:
+```bash
+  npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📚 Digital Academy – Frontend Development Module
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+This project is a practical exercise developed for the Frontend Development module at Digital Academy, showcasing skills in building interactive web apps with modern front-end technologies.
