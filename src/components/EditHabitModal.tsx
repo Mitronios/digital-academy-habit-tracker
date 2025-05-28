@@ -9,6 +9,7 @@ import { Modal,
   ModalFooter, 
   Button } 
   from "@chakra-ui/react";
+import { useState } from "react";
 
 interface EditHabitModalProps {
   isOpen: boolean;
@@ -21,6 +22,20 @@ interface EditHabitModalProps {
 
 const EditHabitModal = ({isOpen, onClose, initialName, 
   initialColor, onSave }: EditHabitModalProps) => {
+
+    // States for edit
+    const [newName, setNewName] = useState(initialName);
+    const [newColor, setNewColor] = useState(initialColor);
+
+    // Handlers for edit
+    const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setNewName(event.target.value);
+    
+    }
+    const onChangeColor = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setNewColor(event.target.value);
+    }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -30,21 +45,26 @@ const EditHabitModal = ({isOpen, onClose, initialName,
         <ModalBody>
           <Input
             placeholder="Habit name"
-            value=""
+            value={newName}
             mb={3}
+            onChange={onChangeName}
           />
-          <Select>
-            <option value="pink.100">Pink</option>
-            <option value="blue.100">Blue</option>
-            <option value="green.100">Green</option>
-            <option value="yellow.100">Yellow</option>
+          <Select
+            value={newColor}
+            onChange={onChangeColor}
+          >
+            <option value="#FF746C">1</option>
+            <option value="#83CCD2">2</option>
+            <option value="#F68BA2">3</option>
+            <option value="#E2CF88">4</option>
+            <option value="#D8B0C8">5</option>
           </Select>
         </ModalBody>
         <ModalFooter>
-          <Button mr={3}>
+          <Button mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="teal">
+          <Button colorScheme="teal" onClick={() => onSave(newName, newColor)}>
             Save
           </Button>
         </ModalFooter>
