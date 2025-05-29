@@ -4,6 +4,12 @@
   font-weight: 400;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
+}
+
+main {
+  height: 100vh;
 }
